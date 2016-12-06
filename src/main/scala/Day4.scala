@@ -2,11 +2,6 @@ import scala.util.parsing.combinator.JavaTokenParsers
 
 object Day4 extends App with Advent with JavaTokenParsers {
 
-  def rle[T](xs: Seq[T]): List[(T, Int)] = xs.foldLeft(List.empty[(T, Int)]) {
-    case ((prevX, count) :: tail, x) if x == prevX => (x, count + 1) :: tail
-    case (l, x) => (x, 1) :: l
-  }
-
   val line = repsep(ident,  "-") ~ ("-" ~> decimalNumber) ~ ("[" ~> ident <~ "]") ^^ {
     case name~number~checksum => (name, number.toInt, checksum)
   }
